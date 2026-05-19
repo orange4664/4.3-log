@@ -1,0 +1,97 @@
+dataset_params:
+  batch_size: 1
+  split_file: null
+  test_ratio: 0.15
+  train_ratio: 0.7
+  val_ratio: 0.15
+  graph_data_path: /data/run01/scwb923/hamgnn_workspace/hamgnn_realdata/graph_data_Silicon/graph_data_Si
+  num_workers: 0
+losses_metrics:
+  losses:
+  - loss_weight: 1.0
+    metric: mae
+    prediction: hamiltonian
+    target: hamiltonian
+  metrics:
+  - metric: mae
+    prediction: hamiltonian
+    target: hamiltonian
+optim_params:
+  lr: 0.003
+  lr_decay: 0.5
+  lr_patience: 5
+  gradient_clip_val: 0.0
+  max_epochs: 30
+  min_epochs: 1
+  stop_patience: 30
+  optimizer: rt_v43_stream
+  rt_stream_k: 0
+  rt_power_iters: 1
+  rt_period: 1
+  rt_lr_switch: 0.02
+  rt_hard_delta: 0.2
+  rt_soft_delta: 0.5
+  rt_lambda_noise: 1.0
+  rt_lambda_consistency: 0.1
+  rt_lambda_diff: 0.25
+  rt_lambda_uncert: 0.25
+  rt_lambda_tube: 0.1
+  rt_hard_phi_threshold: 0.0
+  rt_soft_phi_threshold: 0.0
+  rt_soft_tau: 0.01
+  rt_log_interval: 5
+output_nets:
+  output_module: HamGNN_out
+  HamGNN_out:
+    ham_only: true
+    ham_type: openmx
+    nao_max: 14
+    add_H0: true
+    symmetrize: true
+    calculate_band_energy: false
+    num_k: 5
+    band_num_control: 8
+    k_path: null
+    soc_switch: false
+    nonlinearity_type: gate
+    spin_constrained: false
+    collinear_spin: false
+    minMagneticMoment: 0.5
+profiler_params:
+  progress_bar_refresh_rat: 1
+  train_dir: /data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/train/rt_v43_stream_b
+representation_nets:
+  HamGNN_pre:
+    legacy_edge_update: false
+    cutoff: 8.0
+    cutoff_func: cos
+    edge_sh_normalization: component
+    edge_sh_normalize: true
+    irreps_edge_sh: 0e + 1o + 2e
+    irreps_node_features: 16x0e+8x1o+4x1e+4x2e
+    num_layers: 1
+    num_radial: 16
+    num_types: 32
+    rbf_func: bessel
+    set_features: true
+    radial_MLP:
+    - 16
+    - 16
+    use_corr_prod: false
+    correlation: 1
+    num_hidden_features: 8
+    use_kan: false
+    radius_scale: 1.01
+    build_internal_graph: false
+    use_gradient_checkpointing: false
+setup:
+  GNN_Net: HamGNNpre
+  accelerator: null
+  ignore_warnings: true
+  checkpoint_path: null
+  load_from_checkpoint: false
+  resume: false
+  num_gpus: 1
+  precision: 32
+  property: hamiltonian
+  stage: fit

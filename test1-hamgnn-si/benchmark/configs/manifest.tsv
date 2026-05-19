@@ -1,0 +1,9 @@
+method	config
+adamw	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/adamw.yaml
+muon_ns	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/muon_ns.yaml
+rt_v43_stream_a	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/rt_v43_stream_a.yaml
+rt_v43_stream_b	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/rt_v43_stream_b.yaml
+rt_v43_stream_c	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/rt_v43_stream_c.yaml
+rt_v43_ns_a	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/rt_v43_ns_a.yaml
+rt_v43_ns_b	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/rt_v43_ns_b.yaml
+rt_v43_ns_c	/data/run01/scwb923/hamgnn_workspace/hamgnn_silicon_v43_sweep/configs/rt_v43_ns_c.yaml
