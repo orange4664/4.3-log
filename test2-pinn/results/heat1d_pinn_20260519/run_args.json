@@ -1,0 +1,19 @@
+{
+  "args": {
+    "depth": 3,
+    "device": "cuda",
+    "lr_switch": 0.0015,
+    "lrs": "0.001,0.002,0.003",
+    "n_boundary": 128,
+    "n_initial": 128,
+    "n_residual": 512,
+    "nu": 0.1,
+    "optimizers": "adamw,muon_ns_adamw,rt_v43_stream_adamw,rt_v43_ns_adamw",
+    "outdir": "results/heat1d_pinn_20260519",
+    "seeds": "0,1,2",
+    "steps": 400,
+    "width": 64
+  },
+  "repaired_v43_source": "/data/run01/scwb923/4.3-log/test1-hamgnn-si/code/hamgnn_rt/optimizers.py",
+  "script": "/data/run01/scwb923/4.3-log/test2-pinn/code/pinn_heat/run_heat_pinn_benchmark.py"
+}
