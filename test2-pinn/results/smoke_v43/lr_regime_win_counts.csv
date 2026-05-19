@@ -1,0 +1,5 @@
+metric,regime,n,selector_beats_muon,selector_beats_ht,selector_beats_hard,selector_beats_soft,selector_beats_rt_fixed
+auc_loss,all,4,4,4,2,2,4
+final_loss,all,4,4,4,2,2,2
+auc_loss,lr_ge_0.05,2,2,2,2,0,2
+final_loss,lr_ge_0.05,2,2,2,2,0,2

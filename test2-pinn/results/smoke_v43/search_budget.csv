@@ -1,0 +1,7 @@
+family,num_algorithm_configs,num_lrs,num_settings,num_seeds,total_runs
+htmuon_like,2,2,2,2,16
+muon,1,2,2,2,8
+rt_fixed,2,2,2,2,16
+sq_hard_v41,2,2,2,2,16
+sq_selector_v43,2,2,2,2,16
+sq_soft_v42,2,2,2,2,16
