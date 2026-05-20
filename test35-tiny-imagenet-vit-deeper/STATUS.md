@@ -1,0 +1,21 @@
+# test35-tiny-imagenet-vit-deeper status
+
+- benchmark type: harder non-HamGNN real-data vision benchmark
+- model type: deeper and wider ViT on Tiny-ImageNet
+- current state:
+  - scaffolded locally
+  - synced to cluster path `/data/run01/scwb923/4.3-log/test35-tiny-imagenet-vit-deeper`
+  - smoke submitted on `gpu_h100` as job `73497`
+  - smoke is now running on cluster node `d1n41d29g01`
+  - first landed smoke summary:
+    - `adamw lr=0.0005 seed=0 best_test_acc = 0.08375`
+    - `muon_ns lr=0.0005 seed=0 best_test_acc = 0.13916666666666666`
+  - formal submitted on `gpu_h100` as job `73503`
+  - formal is now running on cluster node `d1n41d29g01`
+  - first landed formal summaries:
+    - `adamw lr=0.0005 seed=0 best_test_acc = 0.28033854166666666`
+    - `adamw lr=0.0005 seed=1 best_test_acc = 0.27239583333333334`
+- acceptance gate: requires original `muon_ns` to beat `adamw`
+- next action:
+  - smoke gate passed
+  - wait for formal results
