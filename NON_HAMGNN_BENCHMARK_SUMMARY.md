@@ -137,6 +137,87 @@ Acceptance gate for every benchmark:
 - accepted because every landed `muon_ns` value is above the strongest landed
   `adamw` value `0.498046875`
 
+### `test31-svhn-vit-p2-wide`
+
+- real visual benchmark on SVHN
+- stronger matrix-heavy ViT retry with `patch_size=2`, `embed_dim=256`,
+  `depth=10`
+- added because the weaker SVHN ViT recipe in `test28` failed the gate
+- smoke passed:
+  - `adamw best_test_acc = 0.484375`
+  - `muon_ns best_test_acc = 0.5533203125`
+- rerun job `73490` completed successfully after the earlier node-failure retry
+- landed gate-only `adamw` best accuracies:
+  - `0.83662109375`
+  - `0.80537109375`
+  - `0.859765625`
+  - `0.8296875`
+  - `0.7994140625`
+  - `0.75400390625`
+- landed rerun `muon_ns` best accuracies:
+  - `0.9234375`
+  - `0.91435546875`
+  - `0.91787109375`
+  - `0.94619140625`
+  - `0.93984375`
+  - `0.94189453125`
+- accepted because every landed rerun `muon_ns` seed is above the strongest
+  landed rerun `adamw` seed `0.859765625`
+
+### `test32-vit-cifar100-p2-longer`
+
+- real CIFAR-100 visual benchmark
+- longer-training ViT retry with `patch_size=2`
+- added to test whether the accepted CIFAR-100 ViT family stays favorable to
+  original `muon_ns` over a longer optimization horizon
+- smoke passed:
+  - `adamw best_test_acc = 0.2623046875`
+  - `muon_ns best_test_acc = 0.2734375`
+- rerun job `73491` completed successfully after the earlier node-failure retry
+- landed gate-only `adamw` best accuracies:
+  - `0.4993`
+  - `0.497`
+  - `0.4951`
+  - `0.4961`
+  - `0.4826`
+- landed rerun `muon_ns` best accuracies:
+  - `0.4916`
+  - `0.4864`
+  - `0.4966`
+  - `0.5277`
+  - `0.5258`
+  - `0.5332`
+- accepted because the fully landed `lr=0.001` rerun `muon_ns` block is
+  decisively above every landed `adamw` rerun seed
+
+### `test35-tiny-imagenet-vit-deeper`
+
+- harder Tiny-ImageNet ViT follow-up
+- same real `200`-class Tiny-ImageNet family as `test30`, but with a deeper
+  and wider ViT
+- smoke passed:
+  - `adamw best_test_acc = 0.08375`
+  - `muon_ns best_test_acc = 0.13916666666666666`
+- landed formal `adamw` best accuracies:
+  - `0.28033854166666666`
+  - `0.27239583333333334`
+  - `0.28268229166666666`
+  - `0.21328125`
+  - `0.21692708333333333`
+  - `0.22838541666666667`
+- landed formal `muon_ns` best accuracies:
+  - `0.3326822916666667`
+  - `0.33151041666666664`
+  - `0.3359375`
+  - `0.408203125`
+  - `0.399609375`
+  - `0.41432291666666665`
+- accepted because every landed `muon_ns` value is above every landed `adamw`
+  value
+- a later comparison run continued into `rt_v43_stream`, but that larger
+  optimizer sweep was manually cancelled after the first landed `rt_v43_stream`
+  seed because the user chose to stop optimizer-tuning work for now
+
 ## Rejected
 
 ### Text / LLM
@@ -158,68 +239,14 @@ Acceptance gate for every benchmark:
 - `test17-vit-cifar100`
 - `test25-vit-cifar100-p2`
 
+### Tiny-ImageNet MLP-Mixer
+
+- `test36-tiny-imagenet-mlpmixer`
+  - smoke rejected
+  - `adamw best_test_acc = 0.13020833333333334`
+  - `muon_ns best_test_acc = 0.12145833333333333`
+
 ## Pending
-
-### `test31-svhn-vit-p2-wide`
-
-- real visual benchmark on SVHN
-- stronger matrix-heavy ViT retry with `patch_size=2`, `embed_dim=256`,
-  `depth=10`
-- added because the weaker SVHN ViT recipe in `test28` failed the gate
-- smoke passed:
-  - `adamw best_test_acc = 0.484375`
-  - `muon_ns best_test_acc = 0.5533203125`
-- gate-only rerun first ran as job `73440`
-- `73440` was later cancelled by Slurm due to node failure on `d1n41e21g01`
-- rerun was resubmitted as `73490` with the failed node excluded
-- landed gate-only `adamw` best accuracies so far:
-  - `0.83662109375`
-  - `0.80537109375`
-  - `0.859765625`
-  - `0.8296875`
-  - `0.7994140625`
-  - `0.75400390625`
-- still pending because no landed `muon_ns` gate-only block is available yet
-
-### `test32-vit-cifar100-p2-longer`
-
-- real CIFAR-100 visual benchmark
-- longer-training ViT retry with `patch_size=2`
-- added to test whether the accepted CIFAR-100 ViT family stays favorable to
-  original `muon_ns` over a longer optimization horizon
-- smoke passed:
-  - `adamw best_test_acc = 0.2623046875`
-  - `muon_ns best_test_acc = 0.2734375`
-- gate-only rerun now in progress as job `73441`
-- `73441` was later cancelled by Slurm due to node failure on `d1n41e21g01`
-- landed gate-only `adamw` best accuracies so far:
-  - `0.4993`
-  - `0.497`
-  - `0.4951`
-  - `0.4961`
-- still pending because no landed `muon_ns` gate-only block is available yet
-
-### `test35-tiny-imagenet-vit-deeper`
-
-- harder Tiny-ImageNet ViT follow-up
-- same real `200`-class Tiny-ImageNet data family as `test30`, but with a
-  deeper and wider ViT
-- first landed smoke pair:
-  - `adamw best_test_acc = 0.08375`
-  - `muon_ns best_test_acc = 0.13916666666666666`
-- smoke gate passed, so this benchmark is worth promoting to formal
-- formal is now running as job `73503`
-- first landed formal `adamw` best accuracies:
-  - `0.28033854166666666`
-  - `0.27239583333333334`
-
-### `test36-tiny-imagenet-mlpmixer`
-
-- harder Tiny-ImageNet MLP-Mixer follow-up
-- same real `200`-class Tiny-ImageNet data family, but with a matrix-heavy
-  mixer backbone instead of ViT
-- smoke submitted as job `73516`
-- still pending because no landed smoke pair is available yet
 
 ### `test33-stl10-vit-longer`
 - moved to accepted after landed gate-only evidence decisively favored

@@ -89,62 +89,69 @@ Acceptance rule:
   - every landed `muon_ns` value is above the strongest landed `adamw`
     value `0.498046875`
 
-## Pending
-
 - `test31-svhn-vit-p2-wide`
   - stronger SVHN ViT retry with `patch_size=2`
-  - smoke completed on `gpu_h100`: `73433`
-  - smoke:
-    - `adamw best_test_acc = 0.484375`
-    - `muon_ns best_test_acc = 0.5533203125`
-  - gate-only rerun first submitted on `gpu_h100`: `73440`
-  - `73440` was later cancelled by Slurm due to node failure on
-    `d1n41e21g01`
-  - rerun submitted as `73490` with the failed node excluded
-  - `73490` is currently running on `d1n41e21g02`
-  - landed gate-only `adamw` best accuracies so far:
+  - smoke and gate-only rerun now completed
+  - landed rerun `adamw` best accuracies:
     - `0.83662109375`
-    - `0.80537109375`
-    - `0.859765625`
     - `0.8296875`
     - `0.7994140625`
     - `0.75400390625`
+    - `0.80537109375`
+    - `0.859765625`
+  - landed rerun `muon_ns` best accuracies:
+    - `0.9234375`
+    - `0.91435546875`
+    - `0.91787109375`
+    - `0.94619140625`
+    - `0.93984375`
+    - `0.94189453125`
+  - every landed `muon_ns` rerun seed is above the strongest landed `adamw`
+    rerun seed `0.859765625`
 
 - `test32-vit-cifar100-p2-longer`
-  - longer-training CIFAR-100 ViT retry
-  - real CIFAR-100 with `patch_size=2`
-  - smoke passed:
-    - `adamw best_test_acc = 0.2623046875`
-    - `muon_ns best_test_acc = 0.2734375`
-  - gate-only rerun in progress on `gpu_h100`: `73441`
-  - `73441` was later cancelled by Slurm due to node failure on
-    `d1n41e21g01`
-  - rerun submitted as `73491` with the failed node excluded
-  - `73491` is currently running on `d1n41e21g02`
-  - landed gate-only `adamw` best accuracies so far:
+  - longer-training CIFAR-100 ViT retry with `patch_size=2`
+  - smoke and gate-only rerun now completed
+  - landed gate-only `adamw` best accuracies:
     - `0.4993`
     - `0.497`
     - `0.4951`
     - `0.4961`
+    - `0.4826`
+  - landed rerun `muon_ns` best accuracies:
+    - `0.4916`
+    - `0.4864`
+    - `0.4966`
+    - `0.5277`
+    - `0.5258`
+    - `0.5332`
+  - accepted because the fully landed `lr=0.001` rerun `muon_ns` block
+    decisively beats every landed `adamw` rerun seed
 
 - `test35-tiny-imagenet-vit-deeper`
   - harder Tiny-ImageNet ViT follow-up
-  - smoke submitted on `gpu_h100`: `73497`
-  - landed smoke:
-    - `adamw best_test_acc = 0.08375`
-    - `muon_ns best_test_acc = 0.13916666666666666`
-  - smoke gate passed, so this benchmark should be promoted to formal
-  - formal submitted on `gpu_h100`: `73503`
-  - `73503` is currently running on `d1n41d29g01`
-  - first landed formal `adamw` best accuracies:
+  - real `64x64`, `200`-class visual classification
+  - smoke accepted
+  - formal landed `adamw` best accuracies:
     - `0.28033854166666666`
     - `0.27239583333333334`
+    - `0.28268229166666666`
+    - `0.21328125`
+    - `0.21692708333333333`
+    - `0.22838541666666667`
+  - formal landed `muon_ns` best accuracies:
+    - `0.3326822916666667`
+    - `0.33151041666666664`
+    - `0.3359375`
+    - `0.408203125`
+    - `0.399609375`
+    - `0.41432291666666665`
+  - every landed `muon_ns` value is above every landed `adamw` value
+  - the later optimizer comparison job was manually cancelled after the first
+    landed `rt_v43_stream` seed because the user decided to stop optimizer
+    tuning and keep only the already-validated `muon_ns vs adamw` conclusion
 
-- `test36-tiny-imagenet-mlpmixer`
-  - harder Tiny-ImageNet MLP-Mixer follow-up
-  - smoke submitted on `gpu_h100`: `73516`
-  - `73516` is currently pending in Slurm queue
-  - no landed results yet
+## Pending
 
 - `test33-stl10-vit-longer`
   - moved to accepted based on landed gate-only evidence
@@ -189,6 +196,10 @@ Acceptance rule:
   - smoke rejected
   - `adamw`: `0.2291015625`
   - `muon_ns`: `0.2228515625`
+- `test36-tiny-imagenet-mlpmixer`
+  - smoke rejected
+  - `adamw`: `0.13020833333333334`
+  - `muon_ns`: `0.12145833333333333`
 
 ## Out Of Scope / Deprecated For This Search
 

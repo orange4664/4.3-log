@@ -21,11 +21,18 @@ Scaffolded locally and synced to the cluster workspace:
 
 - `/data/run01/scwb923/4.3-log/test36-tiny-imagenet-mlpmixer`
 
-Smoke has been submitted on `gpu_h100`:
+Smoke ran on `gpu_h100`:
 
 - job `73516`
 
-## Next action
+Landed smoke summaries:
 
-- wait for the smoke summaries from `adamw` and `muon_ns`
-- accept or reject promotion based on the smoke gate
+- `adamw lr=0.0005 seed=0 best_test_acc = 0.13020833333333334`
+- `muon_ns lr=0.0005 seed=0 best_test_acc = 0.12145833333333333`
+
+## Conclusion
+
+This benchmark is rejected at smoke stage under the user's gate:
+
+- original `muon_ns` does not beat `adamw`
+- therefore this branch should not be promoted to formal multi-seed runs

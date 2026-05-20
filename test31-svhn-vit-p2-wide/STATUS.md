@@ -9,7 +9,7 @@
   - gate-only rerun `73440` was cancelled by Slurm due to node failure on
     `d1n41e21g01`
   - gate-only rerun resubmitted with node exclusion as job `73490`
-  - `73490` is currently running on `d1n41e21g02`
+  - `73490` completed successfully on `d1n41e21g02`
 - acceptance gate: requires original `muon_ns` to beat `adamw`
 - current evidence:
   - landed `adamw` smoke summary:
@@ -24,7 +24,21 @@
     - `adamw lr=0.0005 seed=1 best_test_acc = 0.8296875`
     - `adamw lr=0.0005 seed=2 best_test_acc = 0.7994140625`
     - `adamw lr=0.001 seed=0 best_test_acc = 0.75400390625`
+  - landed rerun `muon_ns` summaries:
+    - `muon_ns lr=0.0005 seed=0 best_test_acc = 0.9234375`
+    - `muon_ns lr=0.0005 seed=1 best_test_acc = 0.91435546875`
+    - `muon_ns lr=0.0005 seed=2 best_test_acc = 0.91787109375`
+    - `muon_ns lr=0.001 seed=0 best_test_acc = 0.94619140625`
+    - `muon_ns lr=0.001 seed=1 best_test_acc = 0.93984375`
+    - `muon_ns lr=0.001 seed=2 best_test_acc = 0.94189453125`
 - next action:
-  - wait for rerun `muon_ns` summaries from job `73490`
-  - compare the landed `muon_ns` block against the much stronger gate-only
-    `adamw` baseline before accepting or rejecting
+  - all three landed low-learning-rate rerun `muon_ns` seeds are above the
+    strongest landed low-learning-rate rerun `adamw` seed
+  - the first landed high-learning-rate rerun `muon_ns` seed is also above
+    every landed `adamw` rerun seed so far
+  - the second landed high-learning-rate rerun `muon_ns` seed is also above
+    every landed `adamw` rerun seed so far
+  - the third landed high-learning-rate rerun `muon_ns` seed is also above
+    every landed `adamw` rerun seed so far
+  - this benchmark now cleanly satisfies the acceptance gate and should be
+    treated as accepted

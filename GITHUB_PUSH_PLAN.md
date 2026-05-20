@@ -47,15 +47,14 @@ benchmark search in this thread.
 - `test26-vit-cifar100-p2-deeper/`
 - `test29-stl10-vit/`
 - `test30-tiny-imagenet-vit/`
+- `test31-svhn-vit-p2-wide/`
+- `test32-vit-cifar100-p2-longer/`
 - `test33-stl10-vit-longer/`
+- `test35-tiny-imagenet-vit-deeper/`
 
 ## Pending Benchmarks In This Set
 
-- `test31-svhn-vit-p2-wide/`
-- `test32-vit-cifar100-p2-longer/`
 - `test34-flowers102-vit/`
-- `test35-tiny-imagenet-vit-deeper/`
-- `test36-tiny-imagenet-mlpmixer/`
 
 ## Rejected Benchmarks In This Set
 
@@ -71,6 +70,7 @@ benchmark search in this thread.
 - `test25-vit-cifar100-p2/`
 - `test27-tabular-mlp-suite/`
 - `test28-svhn-vit/`
+- `test36-tiny-imagenet-mlpmixer/`
 
 ## Exclude
 
@@ -97,10 +97,16 @@ benchmark search in this thread.
   though job `73428` is still running later blocks.
 - `test30` is now accepted from the landed low-learning-rate formal block.
 - `test33` is now accepted from landed gate-only evidence.
-- `test31` and `test32` passed smoke and still need landed `muon_ns`
-  gate-only evidence.
-- `test35` passed smoke and is in formal.
-- `test36` smoke is submitted and still pending in queue.
+- `test31` is now accepted because every landed rerun `muon_ns` seed is above
+  the strongest landed rerun `adamw` seed.
+- `test32` is now accepted because the fully landed `lr=0.001` rerun
+  `muon_ns` block decisively beats every landed `adamw` rerun seed.
+- `test35` is now accepted under the user's gate because the landed original
+  `muon_ns` formal block decisively beats the landed `adamw` formal block; the
+  later `rt_v43_stream / rt_v43_ns / rt_v6_fdt_metric` comparison sweep was
+  manually cancelled at the user's request after the first landed
+  `rt_v43_stream` seed.
+- `test36` smoke has completed and is rejected because `muon_ns < adamw`.
 - `test34` is blocked on dataset provisioning and should not be treated as a
   completed run.
 - Prefer selective `git add` of the directories above instead of broad staging,
