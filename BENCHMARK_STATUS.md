@@ -6,6 +6,14 @@ Acceptance rule:
 
 - a benchmark is counted as good only if original `muon_ns` beats `adamw`
 
+Repository grouping:
+
+- strong Muon wins live under `01-muon-strongly-better/`
+- smaller accepted Muon wins live under `02-muon-slightly-better/`
+- rejected or AdamW-favored runs live under `03-adamw-better-or-failed/`
+- HamGNN/PINN/incomplete material lives under
+  `04-archive-hamgnn-pinn-and-incomplete/`
+
 ## Accepted
 
 - `test11-vit-cifar10`
@@ -147,14 +155,19 @@ Acceptance rule:
     - `0.399609375`
     - `0.41432291666666665`
   - every landed `muon_ns` value is above every landed `adamw` value
+  - best `adamw = 0.282682`, best `muon_ns = 0.414323`
+  - best absolute gain is `+0.131641`, about `+13.16` percentage points
+  - best relative gain is about `+46.6%`
+  - mean `adamw = 0.249002`, mean `muon_ns = 0.370378`
+  - mean absolute gain is `+0.121376`, about `+12.14` percentage points
+  - mean relative gain is about `+48.7%`
   - the later optimizer comparison job was manually cancelled after the first
     landed `rt_v43_stream` seed because the user decided to stop optimizer
     tuning and keep only the already-validated `muon_ns vs adamw` conclusion
 
 ## Pending
 
-- `test33-stl10-vit-longer`
-  - moved to accepted based on landed gate-only evidence
+- no current benchmark is pending in the reorganized non-HamGNN status table
 
 ## Rejected
 

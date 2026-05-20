@@ -37,7 +37,7 @@ tail -n +2 configs/manifest.tsv | while IFS=$'\t' read -r METHOD CONFIG; do
   DIAG_DIR="$ROOT/diag/$RUN_NAME"
   mkdir -p "$DIAG_DIR"
   echo "LAUNCH method=$METHOD config=$CONFIG diag=$DIAG_DIR"
-  python /data/run01/scwb923/4.3-log/test1-hamgnn-si/code/scripts/gpu_monitor.py \
+  python /data/home/scwb923/hamgnn_rt_v6_adapter/scripts/gpu_monitor.py \
     --out "$DIAG_DIR/gpu_monitor.csv" \
     --interval 5 &
   MON_PID=$!

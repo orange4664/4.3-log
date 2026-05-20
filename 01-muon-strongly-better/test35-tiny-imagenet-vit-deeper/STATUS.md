@@ -4,7 +4,7 @@
 - model type: deeper and wider ViT on Tiny-ImageNet
 - current state:
   - scaffolded locally
-  - synced to cluster path `/data/run01/scwb923/4.3-log/test35-tiny-imagenet-vit-deeper`
+  - original run synced to cluster path `/data/run01/scwb923/4.3-log/test35-tiny-imagenet-vit-deeper`
   - smoke submitted on `gpu_h100` as job `73497`
   - smoke completed on cluster node `d1n41d29g01`
   - first landed smoke summary:
@@ -33,22 +33,20 @@
 - acceptance gate: requires original `muon_ns` to beat `adamw`
 - next action:
   - smoke gate passed
-  - all three landed formal `muon_ns lr=0.0005` seeds are above every landed
-    `adamw` formal seed so far
-  - the first landed `muon_ns lr=0.001` formal seed is even stronger than the
-    landed `muon_ns lr=0.0005` block and is still above every landed formal
-    `adamw` seed so far
-  - the second landed `muon_ns lr=0.001` formal seed is also far above every
-    landed formal `adamw` seed so far
-  - the third landed `muon_ns lr=0.001` formal seed is stronger still and
-    remains above every landed formal `adamw` seed so far
+  - every landed formal `muon_ns` value is above every landed formal `adamw`
+    value
+  - best `adamw = 0.28268229166666666`
+  - best `muon_ns = 0.41432291666666665`
+  - best absolute gain is `+0.131640625`, about `+13.16` percentage points
+  - best relative gain is about `+46.6%`
+  - mean `adamw = 0.2490017361111111`
+  - mean `muon_ns = 0.37037760416666664`
+  - mean absolute gain is `+0.12137586805555554`, about `+12.14` percentage
+    points
+  - mean relative gain is about `+48.7%`
   - the original `muon_ns` formal sweep is now complete
   - the first `rt_v43_stream lr=0.0005 seed=0` formal block has also completed
-  - cluster now shows `rt_v43_stream/lr_0.0005/seed_1/diag`, which means the
-    same still-running job has already advanced into the next `rt_v43_stream`
-    seed
-  - remaining work still includes:
-    - `rt_v43_stream` remaining formal seeds
-    - `rt_v43_ns` formal blocks
-    - `rt_v6_fdt_metric` formal blocks
-  - wait for the larger formal sweep to finish before promoting this benchmark
+  - the remaining `rt_v43_stream / rt_v43_ns / rt_v6_fdt_metric` comparison
+    was manually stopped at the user's request
+  - accepted conclusion for this folder is only `muon_ns > adamw`; it should
+    not be used as a completed `rt_v43_*` comparison

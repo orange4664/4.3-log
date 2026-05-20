@@ -7,6 +7,11 @@ Acceptance rule:
 
 - a benchmark is accepted only if original `muon_ns` beats `adamw`
 
+Path convention:
+
+- strong wins are under `01-muon-strongly-better/`
+- smaller wins are under `02-muon-slightly-better/`
+
 ## Accepted now
 
 ### `test11-vit-cifar10`
@@ -80,6 +85,30 @@ Acceptance rule:
     `0.57734375`, `0.5810546875`
   - strongest landed `adamw`: `0.498046875`
 
+### `test31-svhn-vit-p2-wide`
+
+- real SVHN visual benchmark with a stronger ViT retry
+- accepted from landed rerun seeds:
+  - `muon_ns`: `0.9234375`, `0.91435546875`, `0.91787109375`,
+    `0.94619140625`, `0.93984375`, `0.94189453125`
+  - strongest landed `adamw`: `0.859765625`
+
+### `test32-vit-cifar100-p2-longer`
+
+- real CIFAR-100 visual benchmark with longer training
+- accepted from the landed `lr=0.001` rerun block:
+  - `muon_ns`: `0.5277`, `0.5258`, `0.5332`
+  - strongest landed `adamw`: `0.4993`
+
+### `test35-tiny-imagenet-vit-deeper`
+
+- real Tiny-ImageNet-200 ViT benchmark, deeper/wider than `test30`
+- best `adamw`: `0.282682`
+- best `muon_ns`: `0.414323`
+- best absolute gain: `+0.131641`, about `+13.16` percentage points
+- best relative gain: about `+46.6%`
+- mean absolute gain: about `+12.14` percentage points
+
 ## Explicitly rejected examples
 
 - `test10-pythia-tinystories`
@@ -94,3 +123,4 @@ Acceptance rule:
 - `test25-vit-cifar100-p2`
 - `test27-tabular-mlp-suite`
 - `test28-svhn-vit`
+- `test36-tiny-imagenet-mlpmixer`

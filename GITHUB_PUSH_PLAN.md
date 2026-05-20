@@ -1,113 +1,70 @@
-# GitHub Push Plan
+# GitHub Repository Layout
 
-This file is a staging plan for the eventual GitHub push for the non-HamGNN
-benchmark search in this thread.
+This file records the repository organization after cleanup. The old raw
+`testXX-*` layout has been replaced with result-based folders.
 
-## Include Now
+## Top-level groups
 
 - `BENCHMARK_STATUS.md`
 - `NON_HAMGNN_BENCHMARK_SUMMARY.md`
 - `GITHUB_PUSH_PLAN.md`
-- `test10-pythia-tinystories/`
-- `test11-vit-cifar10/`
-- `test12-mlpmixer-cifar10/`
-- `test13-resmlp-cifar10/`
-- `test14-gpt2-tinystories/`
-- `test15-gpt2-tinystories-lrscan/`
-- `test16-mlpmixer-cifar10-refine/`
-- `test17-vit-cifar100/`
-- `test18-gmlp-cifar10/`
-- `test19-vit-cifar10-large/`
-- `test20-vit-cifar10-p2/`
-- `test21-vit-cifar10-p2-wide/`
-- `test22-mlpmixer-cifar10-p2/`
-- `test23-vit-cifar10-p2-deeper/`
-- `test24-vit-cifar100-p2-wide/`
-- `test25-vit-cifar100-p2/`
-- `test26-vit-cifar100-p2-deeper/`
-- `test27-tabular-mlp-suite/`
-- `test28-svhn-vit/`
-- `test29-stl10-vit/`
-- `test30-tiny-imagenet-vit/`
-- `test31-svhn-vit-p2-wide/`
-- `test32-vit-cifar100-p2-longer/`
-- `test33-stl10-vit-longer/`
-- `test34-flowers102-vit/`
-- `test35-tiny-imagenet-vit-deeper/`
-- `test36-tiny-imagenet-mlpmixer/`
+- `01-muon-strongly-better/`
+- `02-muon-slightly-better/`
+- `03-adamw-better-or-failed/`
+- `04-archive-hamgnn-pinn-and-incomplete/`
 
-## Accepted Benchmarks In This Set
+## Strong Muon wins
 
-- `test11-vit-cifar10/`
-- `test16-mlpmixer-cifar10-refine/`
-- `test19-vit-cifar10-large/`
-- `test21-vit-cifar10-p2-wide/`
-- `test23-vit-cifar10-p2-deeper/`
-- `test24-vit-cifar100-p2-wide/`
-- `test26-vit-cifar100-p2-deeper/`
-- `test29-stl10-vit/`
-- `test30-tiny-imagenet-vit/`
-- `test31-svhn-vit-p2-wide/`
-- `test32-vit-cifar100-p2-longer/`
-- `test33-stl10-vit-longer/`
-- `test35-tiny-imagenet-vit-deeper/`
+- `01-muon-strongly-better/test19-vit-cifar10-large/`
+- `01-muon-strongly-better/test21-vit-cifar10-p2-wide/`
+- `01-muon-strongly-better/test26-vit-cifar100-p2-deeper/`
+- `01-muon-strongly-better/test29-stl10-vit/`
+- `01-muon-strongly-better/test31-svhn-vit-p2-wide/`
+- `01-muon-strongly-better/test32-vit-cifar100-p2-longer/`
+- `01-muon-strongly-better/test33-stl10-vit-longer/`
+- `01-muon-strongly-better/test35-tiny-imagenet-vit-deeper/`
 
-## Pending Benchmarks In This Set
+## Smaller accepted Muon wins
 
-- `test34-flowers102-vit/`
+- `02-muon-slightly-better/test11-vit-cifar10/`
+- `02-muon-slightly-better/test16-mlpmixer-cifar10-refine/`
+- `02-muon-slightly-better/test23-vit-cifar10-p2-deeper/`
+- `02-muon-slightly-better/test24-vit-cifar100-p2-wide/`
+- `02-muon-slightly-better/test30-tiny-imagenet-vit/`
 
-## Rejected Benchmarks In This Set
+## Rejected or AdamW-favored
 
-- `test10-pythia-tinystories/`
-- `test12-mlpmixer-cifar10/`
-- `test13-resmlp-cifar10/`
-- `test14-gpt2-tinystories/`
-- `test15-gpt2-tinystories-lrscan/`
-- `test17-vit-cifar100/`
-- `test18-gmlp-cifar10/`
-- `test20-vit-cifar10-p2/`
-- `test22-mlpmixer-cifar10-p2/`
-- `test25-vit-cifar100-p2/`
-- `test27-tabular-mlp-suite/`
-- `test28-svhn-vit/`
-- `test36-tiny-imagenet-mlpmixer/`
+- `03-adamw-better-or-failed/test10-pythia-tinystories/`
+- `03-adamw-better-or-failed/test12-mlpmixer-cifar10/`
+- `03-adamw-better-or-failed/test13-resmlp-cifar10/`
+- `03-adamw-better-or-failed/test14-gpt2-tinystories/`
+- `03-adamw-better-or-failed/test15-gpt2-tinystories-lrscan/`
+- `03-adamw-better-or-failed/test17-vit-cifar100/`
+- `03-adamw-better-or-failed/test18-gmlp-cifar10/`
+- `03-adamw-better-or-failed/test20-vit-cifar10-p2/`
+- `03-adamw-better-or-failed/test22-mlpmixer-cifar10-p2/`
+- `03-adamw-better-or-failed/test25-vit-cifar100-p2/`
+- `03-adamw-better-or-failed/test27-tabular-mlp-suite/`
+- `03-adamw-better-or-failed/test28-svhn-vit/`
+- `03-adamw-better-or-failed/test36-tiny-imagenet-mlpmixer/`
 
-## Exclude
+## Archive
 
-- `test1-hamgnn-si/`
-- `test2-pinn/`
-- `test3-burgers-pinn/`
-- `test4-poisson-pinn/`
-- `test5-allen-cahn-pinn/`
-- `test6-reaction-diffusion-pinn/`
-- `test7-helmholtz-pinn/`
-- `test8-hamgnn-toy-muonns/`
-- `test9-hamgnn-sacada/`
-- earlier HamGNN repair notes that are not needed for the non-HamGNN benchmark
-  search
+- `04-archive-hamgnn-pinn-and-incomplete/test1-hamgnn-si/`
+- `04-archive-hamgnn-pinn-and-incomplete/test2-pinn/`
+- `04-archive-hamgnn-pinn-and-incomplete/test3-burgers-pinn/`
+- `04-archive-hamgnn-pinn-and-incomplete/test4-poisson-pinn/`
+- `04-archive-hamgnn-pinn-and-incomplete/test5-allen-cahn-pinn/`
+- `04-archive-hamgnn-pinn-and-incomplete/test6-reaction-diffusion-pinn/`
+- `04-archive-hamgnn-pinn-and-incomplete/test7-helmholtz-pinn/`
+- `04-archive-hamgnn-pinn-and-incomplete/test8-hamgnn-toy-muonns/`
+- `04-archive-hamgnn-pinn-and-incomplete/test34-flowers102-vit/`
 
 ## Notes
 
-- `test23` and `test24` already have enough landed formal evidence to count as
-  accepted under the user's gate even though their Slurm jobs may still be
-  finishing higher-learning-rate or later method blocks.
-- `test26` is now accepted because the fully landed `lr=0.001` formal block
-  clearly favors original `muon_ns`.
-- `test29` now has decisive accepted low-learning-rate formal evidence even
-  though job `73428` is still running later blocks.
-- `test30` is now accepted from the landed low-learning-rate formal block.
-- `test33` is now accepted from landed gate-only evidence.
-- `test31` is now accepted because every landed rerun `muon_ns` seed is above
-  the strongest landed rerun `adamw` seed.
-- `test32` is now accepted because the fully landed `lr=0.001` rerun
-  `muon_ns` block decisively beats every landed `adamw` rerun seed.
 - `test35` is now accepted under the user's gate because the landed original
   `muon_ns` formal block decisively beats the landed `adamw` formal block; the
   later `rt_v43_stream / rt_v43_ns / rt_v6_fdt_metric` comparison sweep was
   manually cancelled at the user's request after the first landed
   `rt_v43_stream` seed.
-- `test36` smoke has completed and is rejected because `muon_ns < adamw`.
-- `test34` is blocked on dataset provisioning and should not be treated as a
-  completed run.
-- Prefer selective `git add` of the directories above instead of broad staging,
-  because the worktree contains unrelated benchmark and HamGNN changes.
+- `test34` is blocked on dataset provisioning and remains in the archive.

@@ -7,6 +7,14 @@ Acceptance gate for every benchmark:
 
 - a benchmark is only counted as good if original `muon_ns` beats `adamw`
 
+Repository grouping after cleanup:
+
+- `01-muon-strongly-better/`: large or very robust `muon_ns` wins
+- `02-muon-slightly-better/`: accepted but smaller `muon_ns` wins
+- `03-adamw-better-or-failed/`: AdamW better, failed gate, or insufficient
+  evidence
+- `04-archive-hamgnn-pinn-and-incomplete/`: HamGNN/PINN/incomplete archive
+
 ## Accepted
 
 ### `test11-vit-cifar10`
@@ -214,6 +222,12 @@ Acceptance gate for every benchmark:
   - `0.41432291666666665`
 - accepted because every landed `muon_ns` value is above every landed `adamw`
   value
+- best `adamw = 0.282682`, best `muon_ns = 0.414323`
+- best absolute gain: `+0.131641`, about `+13.16` percentage points
+- best relative gain: about `+46.6%`
+- mean `adamw = 0.249002`, mean `muon_ns = 0.370378`
+- mean absolute gain: `+0.121376`, about `+12.14` percentage points
+- mean relative gain: about `+48.7%`
 - a later comparison run continued into `rt_v43_stream`, but that larger
   optimizer sweep was manually cancelled after the first landed `rt_v43_stream`
   seed because the user chose to stop optimizer-tuning work for now
@@ -245,12 +259,6 @@ Acceptance gate for every benchmark:
   - smoke rejected
   - `adamw best_test_acc = 0.13020833333333334`
   - `muon_ns best_test_acc = 0.12145833333333333`
-
-## Pending
-
-### `test33-stl10-vit-longer`
-- moved to accepted after landed gate-only evidence decisively favored
-  original `muon_ns`
 
 ### `test27-tabular-mlp-suite`
 

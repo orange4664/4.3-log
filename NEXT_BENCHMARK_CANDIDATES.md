@@ -10,18 +10,20 @@ Selection constraints from the thread:
 - avoid toy models unless the matrix path is intentionally made complex
 - accept a benchmark only if original `muon_ns` beats `adamw`
 
-## Priority 1: finish current real-vision gate runs
+## Priority 1: do not add new runs until comparison goals are explicit
 
-These are already in progress and should be decided before adding more noise:
+The previous real-vision gate runs have already been classified in the
+repository:
 
-- `test31-svhn-vit-p2-wide`
-- `test32-vit-cifar100-p2-longer`
+- `test31-svhn-vit-p2-wide` is accepted under `01-muon-strongly-better/`
+- `test32-vit-cifar100-p2-longer` is accepted under
+  `01-muon-strongly-better/`
+- `test35-tiny-imagenet-vit-deeper` is accepted under
+  `01-muon-strongly-better/`
 
-Reason:
-
-- they are real datasets
-- they are still matrix-heavy ViT benchmarks
-- they are harder than the earlier accepted CIFAR recipes
+The next benchmark should be chosen only after deciding whether the goal is
+architecture coverage, physics/PDE relevance, or optimizer tuning beyond
+`muon_ns vs adamw`.
 
 ## Priority 2: small scientific benchmark with stronger precedent in Muon papers
 
@@ -81,6 +83,7 @@ Why not first:
 
 ## Immediate next action
 
-1. wait for `test31` and `test32` `muon_ns` gate-only runs
-2. if either passes the gate, promote it into the accepted set
-3. if one fails, add one new real-data benchmark folder from Priority 2 or 3
+1. keep the current GitHub layout stable
+2. decide whether the next comparison is `muon_ns vs adamw` only or includes
+   `rt_v43_*`
+3. add one new real-data benchmark folder only after that decision
