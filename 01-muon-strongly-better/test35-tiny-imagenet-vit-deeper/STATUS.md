@@ -50,3 +50,29 @@
     was manually stopped at the user's request
   - accepted conclusion for this folder is only `muon_ns > adamw`; it should
     not be used as a completed `rt_v43_*` comparison
+
+## Five-optimizer follow-up
+
+- requested comparison:
+  - `adamw`
+  - `muon_ns`
+  - `muon_adamw`
+  - `rt_v43_stream`
+  - `rt_v43_adamw`
+- implementation:
+  - `muon_adamw` splits parameters using the HamGNN MuonAdamW rule; matrix-like
+    Muon-friendly params use `muon_ns`, remaining params use AdamW.
+  - `rt_v43_adamw` uses the same split; Muon-friendly params use
+    `rt_v43_stream`, remaining params use AdamW.
+- run script:
+  - `scripts/submit_test35_five_optimizers_h100.sbatch`
+- output:
+  - `runs_five_optimizers/`
+  - `FIVE_OPTIMIZER_BENCHMARK_ANALYSIS.md`
+- current state:
+  - scaffolded locally and synced to cluster path
+    `/data/run01/scwb923/4.3-log/01-muon-strongly-better/test35-tiny-imagenet-vit-deeper`
+  - five-optimizer smoke job `73811` completed on the cluster and wrote one
+    `summary.json` for every requested optimizer
+  - formal five-optimizer sweep submitted as Slurm job `73812`
+  - final formal results have not landed yet.

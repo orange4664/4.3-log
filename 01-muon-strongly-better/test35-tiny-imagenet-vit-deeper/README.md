@@ -21,13 +21,36 @@ This keeps the benchmark real, matrix-heavy, and cluster-practical.
 
 This benchmark is only accepted if original `muon_ns` beats `adamw`.
 
-## Planned methods
+## Original accepted gate methods
 
 - `adamw`
 - `muon_ns`
+
+## Five-optimizer follow-up benchmark
+
+The follow-up benchmark requested after choosing `test35` compares:
+
+- `adamw`
+- `muon_ns`
+- `muon_adamw`
 - `rt_v43_stream`
-- `rt_v43_ns`
-- `rt_v6_fdt_metric`
+- `rt_v43_adamw`
+
+Here `muon_adamw` is the HamGNN-style Muon+AdamW hybrid: Muon-friendly matrix
+parameters use `muon_ns`, while the remaining parameters use AdamW.
+`rt_v43_adamw` applies the same hybrid split to the v4.3 streaming RT
+optimizer.
+
+Run script:
+
+```bash
+sbatch scripts/submit_test35_five_optimizers_h100.sbatch
+```
+
+Analysis output:
+
+- `FIVE_OPTIMIZER_BENCHMARK_ANALYSIS.md`
+- `runs_five_optimizers/five_optimizer_summary.csv`
 
 ## Data
 

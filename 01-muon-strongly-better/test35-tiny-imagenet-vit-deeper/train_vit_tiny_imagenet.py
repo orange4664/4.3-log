@@ -19,6 +19,16 @@ from torch.utils.data import DataLoader
 from models import TinyViT
 
 
+MATRIX_TOKENS_EXCLUDED_FROM_MUON = (
+    "embedding",
+    "radial",
+    "basis",
+    "output_module",
+    "norm",
+    "bias",
+)
+
+
 def set_seed(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
@@ -160,11 +170,104 @@ def set_hamgnn_env(args: argparse.Namespace, optimizer_name: str, diag_dir: Path
     os.environ["HAMGNN_RT_BETA_GRID"] = args.beta_grid
 
 
+def split_muon_adamw_params(model: nn.Module) -> Tuple[List[nn.Parameter], List[nn.Parameter]]:
+    """Split trainable params using the HamGNN MuonAdamW rule."""
+    muon_params: List[nn.Parameter] = []
+    adamw_params: List[nn.Parameter] = []
+    for name, param in model.named_parameters():
+        if not param.requires_grad:
+            continue
+        lname = name.lower()
+        if param.ndim >= 2 and not any(token in lname for token in MATRIX_TOKENS_EXCLUDED_FROM_MUON):
+            muon_params.append(param)
+        else:
+            adamw_params.append(param)
+    return muon_params, adamw_params
+
+
+class MultiOptimizer:
+    """Small wrapper so schedulers/training loop can drive two optimizers."""
+
+    def __init__(self, optimizers):
+        self.optimizers = list(optimizers)
+        self.param_groups = []
+        for optimizer in self.optimizers:
+            self.param_groups.extend(optimizer.param_groups)
+
+    def zero_grad(self, set_to_none: bool = True) -> None:
+        for optimizer in self.optimizers:
+            optimizer.zero_grad(set_to_none=set_to_none)
+
+    def step(self) -> None:
+        for optimizer in self.optimizers:
+            optimizer.step()
+
+
+class MultiLRScheduler:
+    """Step one scheduler per underlying optimizer."""
+
+    def __init__(self, schedulers):
+        self.schedulers = list(schedulers)
+
+    def step(self) -> None:
+        for scheduler in self.schedulers:
+            scheduler.step()
+
+
+def make_scheduler(optimizer, epochs: int):
+    if isinstance(optimizer, MultiOptimizer):
+        return MultiLRScheduler(
+            torch.optim.lr_scheduler.CosineAnnealingLR(child, T_max=max(epochs, 1))
+            for child in optimizer.optimizers
+        )
+    return torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1))
+
+
 def make_optimizer(model: nn.Module, args: argparse.Namespace, method: str, lr: float, diag_dir: Path):
     if method == "adamw":
         return torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=args.weight_decay)
 
     from hamgnn_rt.optimizers import build_optimizer_from_env
+
+    if method == "muon_adamw":
+        muon_params, adamw_params = split_muon_adamw_params(model)
+        set_hamgnn_env(args, "muon_ns", diag_dir)
+        muon_optimizer = build_optimizer_from_env(
+            [(f"muon_param_{i}", p) for i, p in enumerate(muon_params)],
+            lr=args.muon_lr,
+            eps=1e-8,
+            beta1=0.9,
+            beta2=0.95,
+            amsgrad=False,
+        )
+        adamw_optimizer = torch.optim.AdamW(
+            adamw_params,
+            lr=lr,
+            betas=(0.9, 0.95),
+            eps=1e-8,
+            weight_decay=args.weight_decay,
+        )
+        return MultiOptimizer([muon_optimizer, adamw_optimizer])
+
+    if method == "rt_v43_adamw":
+        rt_params, adamw_params = split_muon_adamw_params(model)
+        set_hamgnn_env(args, "rt_v43_stream", diag_dir)
+        rt_optimizer = build_optimizer_from_env(
+            [(f"rt_param_{i}", p) for i, p in enumerate(rt_params)],
+            lr=args.rt_hybrid_lr,
+            eps=1e-8,
+            beta1=0.9,
+            beta2=0.95,
+            amsgrad=False,
+        )
+        adamw_optimizer = torch.optim.AdamW(
+            adamw_params,
+            lr=args.rt_hybrid_adamw_lr,
+            betas=(0.9, 0.95),
+            eps=1e-8,
+            weight_decay=args.weight_decay,
+        )
+        return MultiOptimizer([rt_optimizer, adamw_optimizer])
 
     set_hamgnn_env(args, method, diag_dir)
     return build_optimizer_from_env(
@@ -215,7 +318,7 @@ def train_one(args: argparse.Namespace, seed: int, lr: float, method: str, outdi
 
     optimizer = make_optimizer(model, args, method, lr, diag_dir)
     ce = nn.CrossEntropyLoss()
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(args.epochs, 1))
+    scheduler = make_scheduler(optimizer, args.epochs)
 
     records: List[Dict[str, float]] = []
     start = time.time()
@@ -301,7 +404,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-dir", default="./data")
     ap.add_argument("--outdir", required=True)
-    ap.add_argument("--methods", default="adamw,muon_ns,rt_v43_stream,rt_v43_ns,rt_v6_fdt_metric")
+    ap.add_argument("--methods", default="adamw,muon_ns,muon_adamw,rt_v43_stream,rt_v43_adamw")
     ap.add_argument("--lrs", default="0.0005,0.001")
     ap.add_argument("--seeds", default="0,1,2")
     ap.add_argument("--epochs", type=int, default=6)
@@ -313,6 +416,9 @@ def main() -> None:
     ap.add_argument("--log-every", type=int, default=100)
     ap.add_argument("--weight-decay", type=float, default=0.05)
     ap.add_argument("--momentum", type=float, default=0.95)
+    ap.add_argument("--muon-lr", type=float, default=0.02)
+    ap.add_argument("--rt-hybrid-lr", type=float, default=0.0032)
+    ap.add_argument("--rt-hybrid-adamw-lr", type=float, default=0.0032)
     ap.add_argument("--ns-steps", type=int, default=5)
     ap.add_argument("--stream-k", type=int, default=0)
     ap.add_argument("--power-iters", type=int, default=1)
